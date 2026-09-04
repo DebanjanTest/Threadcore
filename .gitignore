@@ -42,3 +42,7 @@ next-env.d.ts
 
 # scratch assets
 scripts/audit_images/
+
+# secrets & keys
+*.csv
+.env*

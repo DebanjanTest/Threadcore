@@ -6,17 +6,38 @@ import { recordTransaction } from "@/lib/transactions";
 export async function POST(request: NextRequest) {
   const audit = createAuditEntry("RZP_ORDER_CREATE", "pending", "Order creation initiated");
 
-  let body: { amountPaise: number; currency: string; receipt: string; notes: Record<string, string>; source?: "HUMAN_WEB" | "AGENT_AUTOPILOT" | "AGENT_CLI" | "SIMULATOR" };
+  let body: {
+    amount?: number;
+    amountPaise?: number;
+    buyerType?: string;
+    currency?: string;
+    receipt?: string;
+    notes?: Record<string, string>;
+    source?: "HUMAN_WEB" | "AGENT_AUTOPILOT" | "AGENT_CLI" | "SIMULATOR";
+  };
   try {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  const { amountPaise, currency, receipt, notes, source } = body;
+  const rawAmount = body.amount !== undefined ? body.amount : body.amountPaise;
+  const amountPaise = typeof rawAmount === "number" ? rawAmount : parseInt(String(rawAmount), 10);
+  const { currency = "INR", receipt, buyerType, source } = body;
+  const notes: Record<string, string> = { ...(body.notes || {}) };
+  if (buyerType) notes.buyerType = buyerType;
 
-  if (!amountPaise || amountPaise <= 0) {
+  if (!amountPaise || isNaN(amountPaise) || amountPaise <= 0) {
     return NextResponse.json({ error: "Invalid amount" }, { status: 400 });
+  }
+
+  if (amountPaise > 500000) {
+    audit.status = "error";
+    audit.message = "Order exceeds non-bypassable ceiling of ₹5,000 (500000 paise)";
+    return NextResponse.json(
+      { error: "Order exceeds ₹5,000 ceiling (MAX_BUDGET_PAISE: 500000)", audit },
+      { status: 400 }
+    );
   }
 
   const budgetCheck = validateBudget(amountPaise);
@@ -25,7 +46,7 @@ export async function POST(request: NextRequest) {
     audit.message = budgetCheck.reason!;
     return NextResponse.json(
       { error: budgetCheck.reason, audit },
-      { status: 403 }
+      { status: 400 }
     );
   }
 
@@ -36,7 +57,7 @@ export async function POST(request: NextRequest) {
 
   const resolvedSource =
     source ||
-    (notes?.client?.toLowerCase().includes("agent")
+    (buyerType?.toLowerCase().includes("agent") || notes?.client?.toLowerCase().includes("agent")
       ? "AGENT_AUTOPILOT"
       : notes?.client?.toLowerCase().includes("cli")
       ? "AGENT_CLI"
@@ -116,7 +137,7 @@ export async function POST(request: NextRequest) {
       orderId: order.id,
       amount: order.amount,
       currency: order.currency,
-      keyId: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      keyId: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID,
       idempotencyKey,
       isDemo: false,
       audit,

@@ -6,18 +6,27 @@ import { updateTransactionStatus } from "@/lib/transactions";
 export async function POST(request: NextRequest) {
   const audit = createAuditEntry("PAYMENT_VERIFY", "pending", "Payment verification initiated");
 
-  let body: { orderId: string; paymentId: string; signature: string };
+  let body: {
+    orderId?: string;
+    paymentId?: string;
+    signature?: string;
+    razorpay_order_id?: string;
+    razorpay_payment_id?: string;
+    razorpay_signature?: string;
+  };
   try {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  const { orderId, paymentId, signature } = body;
+  const orderId = body.orderId || body.razorpay_order_id;
+  const paymentId = body.paymentId || body.razorpay_payment_id;
+  const signature = body.signature || body.razorpay_signature;
 
   if (!orderId || !paymentId || !signature) {
     return NextResponse.json(
-      { error: "Missing required fields: orderId, paymentId, signature" },
+      { error: "Missing required fields: orderId/razorpay_order_id, paymentId/razorpay_payment_id, signature/razorpay_signature" },
       { status: 400 }
     );
   }
