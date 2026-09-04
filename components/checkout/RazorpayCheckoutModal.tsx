@@ -412,8 +412,29 @@ export default function RazorpayCheckoutModal({
               </svg>
             }
           >
-            Initiate Bounded Payment
+            Pay with Razorpay
           </Button>
+
+          {/* Test card hint — shows correct Razorpay test credentials */}
+          <div className="border border-border-subtle bg-surface-1 p-2.5 space-y-1">
+            <div className="font-mono text-[8px] uppercase tracking-widest text-text-muted font-bold">
+              🧪 Test Mode — Use These Credentials
+            </div>
+            <div className="font-mono text-[9px] text-text-secondary space-y-0.5">
+              <div className="flex justify-between">
+                <span className="text-text-muted">Card No:</span>
+                <span className="text-foreground tracking-wider font-bold">4111 1111 1111 1111</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-text-muted">Expiry / CVV:</span>
+                <span className="text-foreground">12/28 · 123</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-text-muted">OTP (bank page):</span>
+                <span className="text-emerald-400 font-bold">1234</span>
+              </div>
+            </div>
+          </div>
 
           <div className="flex items-center justify-center gap-2 font-mono text-[8px] text-text-muted uppercase tracking-widest">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
