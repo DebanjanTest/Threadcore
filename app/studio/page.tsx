@@ -645,9 +645,15 @@ function StudioContent() {
       {checkoutOpen && (
         <div
           className="fixed inset-0 bg-background/85 z-50 flex items-center justify-center p-6 backdrop-blur-sm"
-          onClick={() => setCheckoutOpen(false)}
+          onClick={() => {
+            // Suppress close if Razorpay SDK overlay is currently open
+            const container = document.getElementById("rzp-checkout-container");
+            if (container?.dataset.rzpOpen === "true") return;
+            setCheckoutOpen(false);
+          }}
         >
           <div
+            id="rzp-checkout-container"
             className="w-full max-w-md"
             onClick={(e) => e.stopPropagation()}
           >

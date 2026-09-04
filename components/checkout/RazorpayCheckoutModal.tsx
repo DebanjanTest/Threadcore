@@ -68,6 +68,8 @@ export default function RazorpayCheckoutModal({
   const [rootCause, setRootCause] = useState("");
   const [lastOrderId, setLastOrderId] = useState<string | null>(null);
   const [demoOrderInfo, setDemoOrderInfo] = useState<{ orderId: string; amount: number } | null>(null);
+  // Track when Razorpay SDK overlay is actually open so backdrop click is suppressed
+  const razorpayOpenRef = useRef(false);
 
   const failureSimRef = useRef(failureSimEnabled);
   const onSuccessRef = useRef(onSuccess);
@@ -85,13 +87,19 @@ export default function RazorpayCheckoutModal({
     onFailureRef.current = onFailure;
   }, [onFailure]);
 
+  // Expose whether Razorpay overlay is open via data attribute for the parent backdrop
+  useEffect(() => {
+    const el = document.getElementById("rzp-checkout-container");
+    if (el) el.dataset.rzpOpen = String(razorpayOpenRef.current);
+  });
+
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
     document.body.appendChild(script);
     return () => {
-      document.body.removeChild(script);
+      if (document.body.contains(script)) document.body.removeChild(script);
     };
   }, []);
 
@@ -151,7 +159,7 @@ export default function RazorpayCheckoutModal({
     ) => {
       if (typeof window === "undefined" || !window.Razorpay) {
         setCheckoutState("failed");
-        setErrorMessage("Razorpay SDK not loaded");
+        setErrorMessage("Razorpay SDK not loaded. Please refresh and try again.");
         setRootCause("SDK_LOAD_FAILED: checkout.js not available");
         return;
       }
@@ -164,6 +172,7 @@ export default function RazorpayCheckoutModal({
         description: "Apparel Studio Order",
         order_id: orderId,
         handler: (response: RazorpayResponse) => {
+          razorpayOpenRef.current = false; // SDK closed after payment
           if (simulate && failureSimRef.current) {
             setCheckoutState("failed");
             setErrorMessage("Payment declined by issuing bank");
@@ -183,16 +192,20 @@ export default function RazorpayCheckoutModal({
         },
         modal: {
           ondismiss: () => {
+            razorpayOpenRef.current = false; // SDK overlay closed by user
             setCheckoutState("idle");
           },
         },
-        theme: { color: "#f4f4f5" },
+        prefill: { name: "Threadcore Customer", email: "customer@threadcore.in" },
+        theme: { color: "#f59e0b" }, // amber to match brand
       };
 
       try {
         const rzp = new window.Razorpay(options);
+        razorpayOpenRef.current = true; // SDK is now open — lock backdrop
         rzp.open();
       } catch (err) {
+        razorpayOpenRef.current = false;
         const msg = err instanceof Error ? err.message : "Razorpay init failed";
         setCheckoutState("failed");
         setErrorMessage(msg);
