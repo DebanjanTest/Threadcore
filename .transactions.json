@@ -1,0 +1,363 @@
+[
+  {
+    "id": "order_demo_1788527073510",
+    "receipt": "agent_rcpt_1788527073482",
+    "amountPaise": 81284,
+    "currency": "INR",
+    "status": "VERIFIED",
+    "source": "HUMAN_WEB",
+    "idempotencyKey": "idemp_psjzeysk",
+    "notes": {
+      "agentProtocol": "NPCI-UAP/1.0",
+      "buyerPersona": "precision_buyer",
+      "sku": "TC-TEE-001",
+      "quantity": "1"
+    },
+    "rawPayload": {
+      "request": {
+        "amountPaise": 81284,
+        "currency": "INR",
+        "receipt": "agent_rcpt_1788527073482",
+        "notes": {
+          "agentProtocol": "NPCI-UAP/1.0",
+          "buyerPersona": "precision_buyer",
+          "sku": "TC-TEE-001",
+          "quantity": "1"
+        }
+      },
+      "mode": "sandbox_demo",
+      "verification": "sandbox_auto_verified",
+      "verifiedAt": "2026-09-04T13:04:33.536Z"
+    },
+    "createdAt": "2026-09-04T13:04:33.510Z",
+    "updatedAt": "2026-09-04T13:04:33.536Z",
+    "paymentId": "pay_agent_1788527073513",
+    "signature": "sig_agent_deterministic_valid"
+  },
+  {
+    "id": "order_demo_1788527069077",
+    "receipt": "agent_rcpt_1788527069053",
+    "amountPaise": 366118,
+    "currency": "INR",
+    "status": "VERIFIED",
+    "source": "HUMAN_WEB",
+    "idempotencyKey": "idemp_8sm1aem0",
+    "notes": {
+      "agentProtocol": "NPCI-UAP/1.0",
+      "buyerPersona": "remediated_buyer",
+      "sku": "TC-HOD-001",
+      "quantity": "2"
+    },
+    "rawPayload": {
+      "request": {
+        "amountPaise": 366118,
+        "currency": "INR",
+        "receipt": "agent_rcpt_1788527069053",
+        "notes": {
+          "agentProtocol": "NPCI-UAP/1.0",
+          "buyerPersona": "remediated_buyer",
+          "sku": "TC-HOD-001",
+          "quantity": "2"
+        }
+      },
+      "mode": "sandbox_demo",
+      "verification": "sandbox_auto_verified",
+      "verifiedAt": "2026-09-04T13:04:29.093Z"
+    },
+    "createdAt": "2026-09-04T13:04:29.077Z",
+    "updatedAt": "2026-09-04T13:04:29.093Z",
+    "paymentId": "pay_agent_1788527069079",
+    "signature": "sig_agent_deterministic_valid"
+  },
+  {
+    "id": "order_demo_1788527063427",
+    "receipt": "TC-TEST-REMED-1",
+    "amountPaise": 361800,
+    "currency": "INR",
+    "status": "PENDING",
+    "source": "HUMAN_WEB",
+    "idempotencyKey": "idemp_2szkcg3n",
+    "notes": {
+      "sku": "TC-HOD-001",
+      "quantity": "2"
+    },
+    "rawPayload": {
+      "request": {
+        "amountPaise": 361800,
+        "currency": "INR",
+        "receipt": "TC-TEST-REMED-1",
+        "notes": {
+          "sku": "TC-HOD-001",
+          "quantity": "2"
+        }
+      },
+      "mode": "sandbox_demo"
+    },
+    "createdAt": "2026-09-04T13:04:23.427Z",
+    "updatedAt": "2026-09-04T13:04:23.427Z"
+  },
+  {
+    "id": "order_demo_1788526558059",
+    "receipt": "agent_rcpt_1788526557976",
+    "amountPaise": 183059,
+    "currency": "INR",
+    "status": "VERIFIED",
+    "source": "HUMAN_WEB",
+    "idempotencyKey": "idemp_x0593o0q",
+    "notes": {
+      "agentProtocol": "NPCI-UAP/1.0",
+      "buyerPersona": "remediated_buyer",
+      "sku": "TC-HOD-001",
+      "quantity": "6"
+    },
+    "rawPayload": {
+      "request": {
+        "amountPaise": 183059,
+        "currency": "INR",
+        "receipt": "agent_rcpt_1788526557976",
+        "notes": {
+          "agentProtocol": "NPCI-UAP/1.0",
+          "buyerPersona": "remediated_buyer",
+          "sku": "TC-HOD-001",
+          "quantity": "6"
+        }
+      },
+      "mode": "sandbox_demo",
+      "verification": "sandbox_auto_verified",
+      "verifiedAt": "2026-09-04T12:55:58.124Z"
+    },
+    "createdAt": "2026-09-04T12:55:58.059Z",
+    "updatedAt": "2026-09-04T12:55:58.125Z",
+    "paymentId": "pay_agent_1788526558061",
+    "signature": "sig_agent_deterministic_valid"
+  },
+  {
+    "id": "order_demo_1788524488526",
+    "receipt": "TC-1788524486533",
+    "amountPaise": 81284,
+    "currency": "INR",
+    "status": "PENDING",
+    "source": "HUMAN_WEB",
+    "idempotencyKey": "idemp_0sp9ldfh",
+    "notes": {
+      "sku": "TC-TEE-001",
+      "color": "black",
+      "size": "L",
+      "quantity": "1"
+    },
+    "rawPayload": {
+      "request": {
+        "amountPaise": 81284,
+        "currency": "INR",
+        "receipt": "TC-1788524486533",
+        "notes": {
+          "sku": "TC-TEE-001",
+          "color": "black",
+          "size": "L",
+          "quantity": "1"
+        }
+      },
+      "mode": "sandbox_demo"
+    },
+    "createdAt": "2026-09-04T12:21:28.526Z",
+    "updatedAt": "2026-09-04T12:21:28.526Z"
+  },
+  {
+    "id": "order_demo_1788524341266",
+    "receipt": "TC-1788524339426",
+    "amountPaise": 176274,
+    "currency": "INR",
+    "status": "VERIFIED",
+    "source": "HUMAN_WEB",
+    "idempotencyKey": "idemp_jyn6vycp",
+    "notes": {
+      "sku": "TC-HOD-001",
+      "color": "charcoal",
+      "size": "XL",
+      "quantity": "2"
+    },
+    "rawPayload": {
+      "request": {
+        "amountPaise": 176274,
+        "currency": "INR",
+        "receipt": "TC-1788524339426",
+        "notes": {
+          "sku": "TC-HOD-001",
+          "color": "charcoal",
+          "size": "XL",
+          "quantity": "2"
+        }
+      },
+      "mode": "sandbox_demo",
+      "verification": "sandbox_auto_verified",
+      "verifiedAt": "2026-09-04T12:19:02.264Z"
+    },
+    "createdAt": "2026-09-04T12:19:01.266Z",
+    "updatedAt": "2026-09-04T12:19:02.264Z",
+    "paymentId": "pay_demo_1788524342254",
+    "signature": "sig_demo_verified"
+  },
+  {
+    "id": "order_sim_fail_1788524319032",
+    "receipt": "rcpt_fail_sim_1788524319032",
+    "amountPaise": 70682,
+    "currency": "INR",
+    "status": "FAILED",
+    "source": "SIMULATOR",
+    "idempotencyKey": "idemp_decline_sim_q6nyme9",
+    "failureReason": "BAD_REQUEST_ERROR: Payment failed on test card 4000 0000 0000 1023 (Bank Issuer Declined)",
+    "recoveryMethod": "UPI_FAILOVER",
+    "recoveryStatus": "OFFERED",
+    "notes": {
+      "testCard": "4000 0000 0000 1023",
+      "errorCode": "BAD_REQUEST_ERROR",
+      "recoveryFailover": "Dynamic UPI QR"
+    },
+    "rawPayload": {
+      "event": "payment.failed",
+      "simulated": true,
+      "card": "4000 0000 0000 1023",
+      "remediation": "IDEMPOTENCY_LOCK_ENGAGED_UPI_RECOVERY_ISSUED"
+    },
+    "createdAt": "2026-09-04T12:18:39.032Z",
+    "updatedAt": "2026-09-04T12:18:39.032Z"
+  },
+  {
+    "id": "order_sim_fail_1788524312343",
+    "receipt": "rcpt_fail_sim_1788524312343",
+    "amountPaise": 70682,
+    "currency": "INR",
+    "status": "FAILED",
+    "source": "SIMULATOR",
+    "idempotencyKey": "idemp_decline_sim_5nn7nvs",
+    "failureReason": "BAD_REQUEST_ERROR: Payment failed on test card 4000 0000 0000 1023 (Bank Issuer Declined)",
+    "recoveryMethod": "UPI_FAILOVER",
+    "recoveryStatus": "OFFERED",
+    "notes": {
+      "testCard": "4000 0000 0000 1023",
+      "errorCode": "BAD_REQUEST_ERROR",
+      "recoveryFailover": "Dynamic UPI QR"
+    },
+    "rawPayload": {
+      "event": "payment.failed",
+      "simulated": true,
+      "card": "4000 0000 0000 1023",
+      "remediation": "IDEMPOTENCY_LOCK_ENGAGED_UPI_RECOVERY_ISSUED"
+    },
+    "createdAt": "2026-09-04T12:18:32.343Z",
+    "updatedAt": "2026-09-04T12:18:32.343Z"
+  },
+  {
+    "id": "order_demo_1788524085669",
+    "receipt": "agent_rcpt_1788524085596",
+    "amountPaise": 81284,
+    "currency": "INR",
+    "status": "VERIFIED",
+    "source": "HUMAN_WEB",
+    "idempotencyKey": "idemp_zfowo5ho",
+    "notes": {
+      "agentProtocol": "NPCI-UAP/1.0",
+      "buyerPersona": "precision_buyer",
+      "sku": "TC-TEE-001",
+      "quantity": "1"
+    },
+    "rawPayload": {
+      "request": {
+        "amountPaise": 81284,
+        "currency": "INR",
+        "receipt": "agent_rcpt_1788524085596",
+        "notes": {
+          "agentProtocol": "NPCI-UAP/1.0",
+          "buyerPersona": "precision_buyer",
+          "sku": "TC-TEE-001",
+          "quantity": "1"
+        }
+      },
+      "mode": "sandbox_demo",
+      "verification": "sandbox_auto_verified",
+      "verifiedAt": "2026-09-04T12:14:45.727Z"
+    },
+    "createdAt": "2026-09-04T12:14:45.669Z",
+    "updatedAt": "2026-09-04T12:14:45.727Z",
+    "paymentId": "pay_agent_1788524085671",
+    "signature": "sig_agent_deterministic_valid"
+  },
+  {
+    "id": "order_demo_1719940120",
+    "receipt": "rcpt_TC-HOODIE-001_1719940120",
+    "amountPaise": 153282,
+    "currency": "INR",
+    "status": "VERIFIED",
+    "source": "AGENT_CLI",
+    "idempotencyKey": "idemp_cli_uap_984f1a2e",
+    "paymentId": "pay_demo_verified_9123",
+    "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "notes": {
+      "sku": "TC-HOODIE-001",
+      "color": "black",
+      "size": "XL",
+      "quantity": "1",
+      "client": "AutonomousAgent-v2.4",
+      "protocol": "UAP-1.0"
+    },
+    "createdAt": "2026-09-04T10:14:36.113Z",
+    "updatedAt": "2026-09-04T10:14:48.113Z",
+    "rawPayload": {
+      "action": "agent_purchase",
+      "budget_paise": 500000,
+      "print_zone": "front-center",
+      "dpi": 300,
+      "validation_status": "PASSED"
+    }
+  },
+  {
+    "id": "order_demo_1719942400",
+    "receipt": "rcpt_TC-TEE-001_1719942400",
+    "amountPaise": 70682,
+    "currency": "INR",
+    "status": "FAILED",
+    "source": "SIMULATOR",
+    "idempotencyKey": "idemp_sim_fail_1023_declined",
+    "failureReason": "BAD_REQUEST_ERROR: Your card was declined. Simulation card 4000 0000 0000 1023 triggered issuer decline.",
+    "recoveryMethod": "UPI_FAILOVER",
+    "recoveryStatus": "OFFERED",
+    "notes": {
+      "sku": "TC-TEE-001",
+      "color": "vintage-grey",
+      "size": "L",
+      "testCard": "4000 0000 0000 1023",
+      "failoverAction": "Dynamic UPI QR Generated"
+    },
+    "createdAt": "2026-09-04T11:44:36.113Z",
+    "updatedAt": "2026-09-04T11:44:46.113Z",
+    "rawPayload": {
+      "decline_code": "card_declined_by_bank",
+      "idempotency_lock": "ACTIVE_PREVENT_DUPLICATE",
+      "fallback_uri": "upi://pay?pa=razorpay@icici&pn=Threadcore&am=706.82"
+    }
+  },
+  {
+    "id": "order_demo_1719946800",
+    "receipt": "rcpt_TC-JERSEY-001_1719946800",
+    "amountPaise": 106082,
+    "currency": "INR",
+    "status": "VERIFIED",
+    "source": "HUMAN_WEB",
+    "idempotencyKey": "idemp_web_human_33b82c",
+    "paymentId": "pay_demo_human_7741",
+    "signature": "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069",
+    "notes": {
+      "sku": "TC-JERSEY-001",
+      "color": "cream",
+      "size": "M",
+      "quantity": "1",
+      "checkout": "OneClickRazorpay"
+    },
+    "createdAt": "2026-09-04T12:04:36.113Z",
+    "updatedAt": "2026-09-04T12:04:56.113Z",
+    "rawPayload": {
+      "channel": "web_studio",
+      "checkout_flow": "standard_modal"
+    }
+  }
+]

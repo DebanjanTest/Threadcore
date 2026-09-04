@@ -1,0 +1,37 @@
+{
+  "$schema": "https://agentic-commerce.org/schemas/v1/discovery.json",
+  "protocol": "NPCI-UAP/1.0",
+  "compatibleProtocols": ["ACP/1.0", "AP2/1.0", "x402"],
+  "merchant": {
+    "id": "MERCH_THREADCORE_BLR",
+    "name": "THREAD//CORE Technical Apparel Studio",
+    "category": "apparel_custom_manufacturing",
+    "country": "IND",
+    "settlementProvider": "Razorpay"
+  },
+  "endpoints": {
+    "catalog": "/api/agent/catalog",
+    "evaluate": "/api/agent/evaluate",
+    "createOrder": "/api/razorpay/create-order",
+    "verifyPayment": "/api/razorpay/verify",
+    "protocolSpec": "/api/agent/protocol"
+  },
+  "guardrails": {
+    "currency": "INR",
+    "hardCeilingPaise": 500000,
+    "minOrderFloorPaise": 10000,
+    "maxQuantityPerOrder": 50,
+    "requireIdempotency": true,
+    "remediationSupported": true,
+    "failoverRecoverySupported": true
+  },
+  "agentCapabilities": [
+    "sku_discovery",
+    "multi_angle_canvas_eval",
+    "dpi_tolerance_verification",
+    "line_item_pricing_transparency",
+    "self_healing_budget_remediation",
+    "razorpay_order_binding",
+    "audit_trail_streaming"
+  ]
+}
