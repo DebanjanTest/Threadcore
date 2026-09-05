@@ -64,8 +64,13 @@ export default function AuditDrawer({
       aria-label="Live Agent Recorded HUD"
       className={`
         border-l border-border-subtle bg-surface-1/95 backdrop-blur-md
-        transition-all duration-300 flex flex-col shrink-0 z-20 shadow-xl
-        ${isOpen ? "w-full sm:w-96 lg:w-[420px]" : "w-10"}
+        transition-all duration-300 flex flex-col shrink-0 shadow-xl
+        h-full max-h-full min-h-0 overflow-hidden
+        ${
+          isOpen
+            ? "fixed inset-y-0 right-0 z-50 w-full sm:w-96 lg:static lg:w-[420px] lg:z-20"
+            : "hidden lg:flex lg:w-10 lg:z-20"
+        }
       `}
     >
       {/* ─── TITLE & CONTROL BAR ─── */}
@@ -79,7 +84,10 @@ export default function AuditDrawer({
           {isOpen && (
             <div className="flex items-center gap-2">
               <span className="font-bold text-foreground">Live Agent Recorded HUD</span>
-              <span className="text-[10px] px-1.5 py-0.2 rounded-xs bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold">
+              <span
+                suppressHydrationWarning
+                className="text-[10px] px-1.5 py-0.2 rounded-xs bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold"
+              >
                 {entries.length}
               </span>
             </div>
@@ -107,7 +115,7 @@ export default function AuditDrawer({
       </div>
 
       {isOpen && (
-        <div className="flex flex-col flex-1 min-h-0">
+        <div className="flex flex-col flex-1 min-h-0 overflow-hidden">
           {/* Sub-bar with explanation & filters */}
           <div className="px-3 py-2.5 border-b border-border-subtle bg-surface-2/40 flex flex-col gap-2 shrink-0">
             <div className="flex items-center justify-between text-[9px] font-mono text-text-muted uppercase tracking-wider">
@@ -145,7 +153,7 @@ export default function AuditDrawer({
           {/* Stream Log Container */}
           <div
             ref={scrollRef}
-            className="flex-1 overflow-y-auto p-3 flex flex-col gap-2.5 font-mono text-xs select-text"
+            className="flex-1 min-h-0 overflow-y-auto p-3 flex flex-col gap-2.5 font-mono text-xs select-text"
           >
             {filteredEntries.length === 0 ? (
               <div className="flex-1 flex flex-col items-center justify-center text-center p-6 border border-dashed border-border-subtle my-auto rounded-sm">

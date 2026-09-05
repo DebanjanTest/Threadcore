@@ -11,8 +11,9 @@ interface GarmentPreviewProps {
   skuId?: string;
   imageUrl?: string;
   designUrl?: string | null;
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "hero";
   interactive?: boolean;
+  showBorder?: boolean;
   view?: "front" | "back";
   className?: string;
 }
@@ -21,6 +22,7 @@ const sizeClasses = {
   sm: "w-40 h-48",
   md: "w-full max-w-sm aspect-[3/4]",
   lg: "w-full max-w-lg aspect-[3/4]",
+  hero: "w-full h-full max-w-sm aspect-[3/4]",
 };
 
 export default function GarmentPreview({
@@ -32,6 +34,7 @@ export default function GarmentPreview({
   designUrl,
   size = "md",
   interactive = true,
+  showBorder = true,
   view = "front",
   className = "",
 }: GarmentPreviewProps) {
@@ -80,15 +83,17 @@ export default function GarmentPreview({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Brutalist card border and subtle background gradient */}
-      <div
-        className={`
-          absolute inset-0 bg-gradient-to-b from-surface-2 to-surface-1
-          border border-border-subtle
-          transition-all duration-500
-          ${hovered && interactive ? "border-border shadow-[0_0_30px_rgba(244,244,245,0.04)]" : ""}
-        `}
-      />
+      {/* Brutalist card border and subtle background gradient (optional) */}
+      {showBorder && (
+        <div
+          className={`
+            absolute inset-0 bg-gradient-to-b from-surface-2 to-surface-1
+            border border-border-subtle
+            transition-all duration-500
+            ${hovered && interactive ? "border-border shadow-[0_0_30px_rgba(244,244,245,0.04)]" : ""}
+          `}
+        />
+      )}
 
       {/* Subtle image loading skeleton */}
       {!imgLoaded && !imgError && (
@@ -105,7 +110,15 @@ export default function GarmentPreview({
         `}
       >
         {photoUrl && !imgError ? (
-          <div className="relative w-full h-full flex items-center justify-center">
+          <div
+            className={`relative w-full h-full flex items-center justify-center ${
+              photoUrl.startsWith("/pictures/")
+                ? size === "hero"
+                  ? "p-4 sm:p-5"
+                  : "p-3"
+                : ""
+            }`}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={photoUrl}
@@ -114,7 +127,7 @@ export default function GarmentPreview({
               onLoad={() => setImgLoaded(true)}
               onError={() => setImgError(true)}
               className={`
-                w-full h-full ${photoUrl.startsWith("/pictures/") ? "object-contain p-3.5 drop-shadow-md" : "object-cover"} select-none transition-opacity duration-300
+                w-full h-full ${photoUrl.startsWith("/pictures/") ? "object-contain drop-shadow-md" : "object-cover"} select-none transition-opacity duration-300
                 ${imgLoaded ? "opacity-100" : "opacity-0"}
               `}
             />

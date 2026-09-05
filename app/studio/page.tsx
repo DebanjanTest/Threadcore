@@ -89,22 +89,23 @@ function StudioContent() {
     }));
   }
 
-  const [auditEntries, setAuditEntries] = useState<AuditEntry[]>(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const stored = sessionStorage.getItem("threadcore_audit_logs");
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            return [...INITIAL_AUDIT_ENTRIES, ...parsed];
-          }
+  const [auditEntries, setAuditEntries] = useState<AuditEntry[]>(INITIAL_AUDIT_ENTRIES);
+
+  // Hydrate stored session telemetry on mount (post-hydration only to prevent SSR mismatch)
+  useEffect(() => {
+    try {
+      const stored = sessionStorage.getItem("threadcore_audit_logs");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // eslint-disable-next-line react-hooks/set-state-in-effect
+          setAuditEntries([...INITIAL_AUDIT_ENTRIES, ...parsed]);
         }
-      } catch {
-        // ignore
       }
+    } catch {
+      // ignore
     }
-    return INITIAL_AUDIT_ENTRIES;
-  });
+  }, []);
   const [auditOpen, setAuditOpen] = useState(true);
   const [failureSimEnabled, setFailureSimEnabled] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
@@ -400,7 +401,7 @@ function StudioContent() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col studio-bg">
+    <main className="min-h-screen lg:h-screen lg:max-h-screen flex flex-col studio-bg lg:overflow-hidden">
       <Navbar onOpenAutopilot={() => setAutopilotOpen(true)} />
 
       {/* ─── STUDIO SUB-HEADER ─── */}
@@ -458,7 +459,10 @@ function StudioContent() {
             <span className="text-amber-400 font-bold">⚡</span>
             <span>{auditOpen ? "Live HUD (Docked)" : "Open Live HUD"}</span>
             {auditEntries.length > 0 && (
-              <span className="bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-0.2 rounded-xs text-[9px] ml-1 font-bold">
+              <span
+                suppressHydrationWarning
+                className="bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-0.2 rounded-xs text-[9px] ml-1 font-bold"
+              >
                 {auditEntries.length}
               </span>
             )}
@@ -467,11 +471,11 @@ function StudioContent() {
       </header>
 
       {/* ─── MAIN WORKSPACE ─── */}
-      <div className="flex-1 flex flex-col lg:flex-row min-h-0">
+      <div className="flex-1 flex flex-col lg:flex-row min-h-0 lg:overflow-hidden relative">
         {/* ─── LEFT/CENTER: PRODUCT DISPLAY & ANGLE SWITCHER (E-COMMERCE HERO VIEW) ─── */}
-        <div className="flex-1 flex flex-col min-w-0 bg-surface-1/40">
-          {/* Product Quick Bar */}
-          <div className="border-b border-border-subtle px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+        <div className="flex-1 flex flex-col min-w-0 bg-surface-1/40 lg:h-full lg:overflow-hidden relative">
+          {/* Product Quick Bar - Fixed Architectural Header */}
+          <div className="shrink-0 z-10 bg-surface-1/95 backdrop-blur-md border-b border-border-subtle px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="font-mono text-[9px] uppercase tracking-widest text-text-muted">
@@ -486,7 +490,7 @@ function StudioContent() {
                   18% GST Inclusive
                 </span>
               </div>
-              <h1 className="text-xl md:text-2xl font-bold uppercase tracking-tight text-foreground">
+              <h1 className="text-lg md:text-xl font-bold uppercase tracking-tight text-foreground">
                 {selectedSKU?.name}
               </h1>
             </div>
@@ -535,10 +539,10 @@ function StudioContent() {
           </div>
 
           {/* Garment Visual Canvas / Multi-Angle Picture Gallery */}
-          <div className="flex-1 flex flex-col justify-center p-6 md:p-10 relative min-h-[420px] overflow-y-auto">
-            <div className="absolute inset-0 dot-grid opacity-10" />
+          <div className="flex-1 min-h-0 flex flex-col items-center justify-start sm:justify-center p-3 sm:p-4 pt-4 sm:pt-6 relative overflow-y-auto">
+            <div className="absolute inset-0 dot-grid opacity-10 pointer-events-none" />
 
-            <div className="relative max-w-xl w-full mx-auto flex flex-col">
+            <div className="relative max-w-sm md:max-w-md w-full mx-auto flex flex-col items-center justify-center">
               <PictureGallery
                 sku={selectedSKU || APPAREL_SKUS[1]}
                 color={selectedColor}
@@ -562,7 +566,7 @@ function StudioContent() {
         </div>
 
         {/* ─── RIGHT: CONFIGURATION & BUY BOX PANEL (AMAZON / FLIPKART STYLE) ─── */}
-        <div className="w-full lg:w-96 border-t lg:border-t-0 lg:border-l border-border-subtle bg-surface-1 shrink-0">
+        <div className="w-full lg:w-96 border-t lg:border-t-0 lg:border-l border-border-subtle bg-surface-1 shrink-0 lg:h-full lg:overflow-y-auto">
           <ConfigPanel
             config={config}
             onUpdate={handleConfigUpdate}

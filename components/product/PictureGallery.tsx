@@ -75,7 +75,7 @@ export default function PictureGallery({
   return (
     <div className={`flex flex-col-reverse md:flex-row gap-4 ${className}`}>
       {/* ─── THUMBNAIL RAIL (Vertical Desktop / Horizontal Mobile) ─── */}
-      <div className="flex md:flex-col gap-2.5 overflow-x-auto pb-1 md:pb-0 shrink-0 select-none">
+      <div className="flex md:flex-col gap-1.5 overflow-x-auto pb-1 md:pb-0 shrink-0 select-none">
         {angles.map((angle, idx) => {
           const isSelected = activeIndex === idx;
           return (
@@ -84,7 +84,7 @@ export default function PictureGallery({
               onClick={() => handleSelectAngle(idx)}
               aria-label={`View ${angle.label}`}
               className={`
-                relative w-16 h-20 md:w-20 md:h-24 p-1 border bg-surface-1 flex flex-col items-center justify-between
+                relative w-12 h-14 sm:w-14 sm:h-16 md:w-14 md:h-16 p-1 border bg-surface-1 flex flex-col items-center justify-between
                 transition-all duration-200 shrink-0 text-left group overflow-hidden cursor-pointer
                 ${
                   isSelected
@@ -167,19 +167,19 @@ export default function PictureGallery({
       </div>
 
       {/* ─── MAIN PICTURE DISPLAY WITH MAGNIFIER LENS ─── */}
-      <div className="flex-1 flex flex-col">
-        <div className="group relative w-full aspect-[3/4] bg-gradient-to-b from-surface-2 to-surface-1 border border-border-subtle overflow-hidden shadow-2xl">
+      <div className="flex-1 flex flex-col items-center justify-center">
+        <div className="group relative w-full aspect-[3/4] max-w-[280px] sm:max-w-[300px] md:max-w-[320px] max-h-[360px] sm:max-h-[390px] bg-gradient-to-b from-surface-2 to-surface-1 border border-border-subtle overflow-hidden shadow-xl rounded-xs mx-auto">
           {/* Top Picture Status Bar */}
-          <div className="absolute top-3 left-3 right-3 z-20 flex items-center justify-between pointer-events-none">
-            <div className="flex items-center gap-1.5 bg-background/85 backdrop-blur-md border border-border-subtle px-2.5 py-1">
+          <div className="absolute top-2 left-2 right-2 z-20 flex items-center justify-between pointer-events-none">
+            <div className="flex items-center gap-1 bg-background/85 backdrop-blur-md border border-border-subtle px-1.5 py-0.5 shadow-xs">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              <span className="font-mono text-[8px] uppercase tracking-widest text-text-primary font-bold">
+              <span className="font-mono text-[7.5px] uppercase tracking-widest text-text-primary font-bold">
                 {currentAngle.tag}
               </span>
             </div>
 
-            <div className="bg-background/85 backdrop-blur-md border border-border-subtle px-2 py-0.5">
-              <span className="font-mono text-[8px] uppercase tracking-widest text-text-muted">
+            <div className="bg-background/85 backdrop-blur-md border border-border-subtle px-1.5 py-0.5 shadow-xs">
+              <span className="font-mono text-[7.5px] uppercase tracking-widest text-text-muted font-medium">
                 {activeIndex + 1} / {angles.length}
               </span>
             </div>
@@ -189,14 +189,14 @@ export default function PictureGallery({
           <button
             onClick={handlePrev}
             aria-label="Previous angle"
-            className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 flex items-center justify-center bg-background/70 backdrop-blur-sm border border-border-subtle text-foreground hover:bg-foreground hover:text-background transition-all font-mono text-xs opacity-0 group-hover:opacity-100 focus:opacity-100 cursor-pointer"
+            className="absolute left-1.5 top-1/2 -translate-y-1/2 z-20 w-6 h-6 flex items-center justify-center bg-background/70 backdrop-blur-sm border border-border-subtle text-foreground hover:bg-foreground hover:text-background transition-all font-mono text-[10px] opacity-0 group-hover:opacity-100 focus:opacity-100 cursor-pointer"
           >
             ⟨
           </button>
           <button
             onClick={handleNext}
             aria-label="Next angle"
-            className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 flex items-center justify-center bg-background/70 backdrop-blur-sm border border-border-subtle text-foreground hover:bg-foreground hover:text-background transition-all font-mono text-xs opacity-0 group-hover:opacity-100 focus:opacity-100 cursor-pointer"
+            className="absolute right-1.5 top-1/2 -translate-y-1/2 z-20 w-6 h-6 flex items-center justify-center bg-background/70 backdrop-blur-sm border border-border-subtle text-foreground hover:bg-foreground hover:text-background transition-all font-mono text-[10px] opacity-0 group-hover:opacity-100 focus:opacity-100 cursor-pointer"
           >
             ⟩
           </button>
@@ -211,46 +211,54 @@ export default function PictureGallery({
               className="w-full h-full"
             />
           ) : (
-            <MagnifierLens zoomLevel={2.2} lensSize={180} className="w-full h-full flex items-center justify-center">
+            <MagnifierLens zoomLevel={2.2} lensSize={160} className="w-full h-full flex items-center justify-center">
               {/* Front and Back Real Photography with Custom Decal Overlay */}
               {(currentAngle.id === "front" || currentAngle.id === "back") && (
-                <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={currentAngle.id === "front" ? frontImg : backImg}
-                    alt={`${sku.name} - ${currentAngle.label} (${color.name})`}
-                    className={`w-full h-full ${(currentAngle.id === "front" ? frontImg : backImg).startsWith("/pictures/") ? "object-contain p-4 drop-shadow-md" : "object-cover"} select-none`}
-                  />
+                <div
+                  className={`relative w-full h-full flex items-center justify-center overflow-hidden ${
+                    (currentAngle.id === "front" ? frontImg : backImg).startsWith("/pictures/")
+                      ? "pt-7 pb-2 px-3 sm:px-4"
+                      : ""
+                  }`}
+                >
+                  <div className="relative w-full h-full flex items-center justify-center">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={currentAngle.id === "front" ? frontImg : backImg}
+                      alt={`${sku.name} - ${currentAngle.label} (${color.name})`}
+                      className={`w-full h-full ${(currentAngle.id === "front" ? frontImg : backImg).startsWith("/pictures/") ? "object-contain drop-shadow-md" : "object-cover"} select-none`}
+                    />
 
-                  {/* Custom Graphic Print Overlay */}
-                  {designUrl && (
-                    <div
-                      className="absolute pointer-events-none z-20 flex items-center justify-center overflow-hidden"
-                      style={
-                        currentAngle.id === "back"
-                          ? { top: "25%", left: "50%", width: "38%", height: "40%", transform: "translateX(-50%)" }
-                          : sku.type === "hoodie"
-                          ? { top: "33%", left: "50%", width: "34%", height: "32%", transform: "translateX(-50%)" }
-                          : sku.type === "jersey"
-                          ? { top: "30%", left: "50%", width: "36%", height: "38%", transform: "translateX(-50%)" }
-                          : { top: "28%", left: "50%", width: "36%", height: "38%", transform: "translateX(-50%)" }
-                      }
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={designUrl}
-                        alt="Custom Print Decal"
-                        className="w-full h-full object-contain"
-                        style={{
-                          mixBlendMode: isLightColor ? "multiply" : "screen",
-                          opacity: 0.94,
-                          filter: isLightColor
-                            ? "drop-shadow(0 1px 2px rgba(0,0,0,0.15))"
-                            : "drop-shadow(0 2px 4px rgba(0,0,0,0.4))",
-                        }}
-                      />
-                    </div>
-                  )}
+                    {/* Custom Graphic Print Overlay */}
+                    {designUrl && (
+                      <div
+                        className="absolute pointer-events-none z-20 flex items-center justify-center overflow-hidden"
+                        style={
+                          currentAngle.id === "back"
+                            ? { top: "25%", left: "50%", width: "38%", height: "40%", transform: "translateX(-50%)" }
+                            : sku.type === "hoodie"
+                            ? { top: "33%", left: "50%", width: "34%", height: "32%", transform: "translateX(-50%)" }
+                            : sku.type === "jersey"
+                            ? { top: "30%", left: "50%", width: "36%", height: "38%", transform: "translateX(-50%)" }
+                            : { top: "28%", left: "50%", width: "36%", height: "38%", transform: "translateX(-50%)" }
+                        }
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={designUrl}
+                          alt="Custom Print Decal"
+                          className="w-full h-full object-contain"
+                          style={{
+                            mixBlendMode: isLightColor ? "multiply" : "screen",
+                            opacity: 0.94,
+                            filter: isLightColor
+                              ? "drop-shadow(0 1px 2px rgba(0,0,0,0.15))"
+                              : "drop-shadow(0 2px 4px rgba(0,0,0,0.4))",
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
 

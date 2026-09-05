@@ -161,14 +161,14 @@ export default function HomePage() {
 
             {/* Right: Interactive Hero Garment Visualizer */}
             <div className="flex-1 flex flex-col items-center">
-              <div className="w-full max-w-sm bg-gradient-to-b from-surface-2/80 to-surface-1 border border-border-subtle p-6 shadow-2xl relative flex flex-col">
+              <div className="w-full max-w-md bg-gradient-to-b from-surface-2/90 via-surface-2/60 to-surface-1 border border-border-subtle p-4 sm:p-6 shadow-2xl relative flex flex-col">
                 {/* Mode & Silhouette selector row */}
-                <div className="flex items-center justify-between gap-2 mb-4">
+                <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2.5 mb-3">
                   {/* Silhouette selector pill */}
-                  <div className="flex gap-1 border border-border-subtle bg-surface-3/60 p-1 rounded-xs">
+                  <div className="flex gap-1 border border-border-subtle bg-surface-3/80 p-1 rounded-xs">
                     <button
                       onClick={() => setHeroType("tee")}
-                      className={`px-2.5 py-1 font-mono text-[9px] uppercase tracking-wider transition-colors rounded-xs ${
+                      className={`px-3 py-1 font-mono text-[9px] uppercase tracking-wider transition-colors rounded-xs cursor-pointer ${
                         heroType === "tee" ? "bg-amber-500 text-black font-bold shadow-xs" : "text-text-muted hover:text-foreground"
                       }`}
                     >
@@ -176,7 +176,7 @@ export default function HomePage() {
                     </button>
                     <button
                       onClick={() => setHeroType("hoodie")}
-                      className={`px-2.5 py-1 font-mono text-[9px] uppercase tracking-wider transition-colors rounded-xs ${
+                      className={`px-3 py-1 font-mono text-[9px] uppercase tracking-wider transition-colors rounded-xs cursor-pointer ${
                         heroType === "hoodie" ? "bg-amber-500 text-black font-bold shadow-xs" : "text-text-muted hover:text-foreground"
                       }`}
                     >
@@ -184,7 +184,7 @@ export default function HomePage() {
                     </button>
                     <button
                       onClick={() => setHeroType("jersey")}
-                      className={`px-2.5 py-1 font-mono text-[9px] uppercase tracking-wider transition-colors rounded-xs ${
+                      className={`px-3 py-1 font-mono text-[9px] uppercase tracking-wider transition-colors rounded-xs cursor-pointer ${
                         heroType === "jersey" ? "bg-amber-500 text-black font-bold shadow-xs" : "text-text-muted hover:text-foreground"
                       }`}
                     >
@@ -193,10 +193,10 @@ export default function HomePage() {
                   </div>
 
                   {/* 2D Front vs Back View Toggle */}
-                  <div className="flex gap-1 border border-border-subtle bg-surface-3/60 p-1 rounded-xs">
+                  <div className="flex gap-1 border border-border-subtle bg-surface-3/80 p-1 rounded-xs">
                     <button
                       onClick={() => setHeroView("front")}
-                      className={`px-2.5 py-1 font-mono text-[8px] uppercase tracking-wider transition-colors rounded-xs ${
+                      className={`px-2.5 py-1 font-mono text-[8px] uppercase tracking-wider transition-colors rounded-xs cursor-pointer ${
                         heroView === "front"
                           ? "bg-foreground text-background font-bold"
                           : "text-text-muted hover:text-foreground"
@@ -206,7 +206,7 @@ export default function HomePage() {
                     </button>
                     <button
                       onClick={() => setHeroView("back")}
-                      className={`px-2.5 py-1 font-mono text-[8px] uppercase tracking-wider transition-colors rounded-xs ${
+                      className={`px-2.5 py-1 font-mono text-[8px] uppercase tracking-wider transition-colors rounded-xs cursor-pointer ${
                         heroView === "back"
                           ? "bg-foreground text-background font-bold"
                           : "text-text-muted hover:text-foreground"
@@ -217,15 +217,16 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Main 2D Garment Visualizer */}
-                <div className="w-full flex justify-center py-2 h-72 relative">
+                {/* Main 2D Garment Visualizer - Responsive unclipped container with clean padding */}
+                <div className="w-full relative flex items-center justify-center bg-surface-1/60 border border-border-subtle/60 rounded-xs aspect-[4/5] sm:aspect-[3/4] max-h-[360px] sm:max-h-[400px] overflow-hidden my-2">
                   <div className="w-full h-full flex items-center justify-center">
                     <GarmentPreview
                       type={heroType}
                       color={heroColor.hex}
                       colorId={heroColor.id}
                       designUrl={PRESET_DESIGNS[1].dataUrl}
-                      size="md"
+                      size="hero"
+                      showBorder={false}
                       view={heroView}
                       interactive={false}
                     />
@@ -233,21 +234,21 @@ export default function HomePage() {
                 </div>
 
                 {/* Color swatch picker directly in hero */}
-                <div className="mt-6 pt-4 border-t border-border-subtle flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-[9px] uppercase tracking-widest text-text-muted">
+                <div className="mt-3 pt-3 border-t border-border-subtle flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="flex items-center gap-2.5">
+                    <span className="font-mono text-[9px] uppercase tracking-widest text-text-muted shrink-0">
                       Color:
                     </span>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 items-center">
                       {APPAREL_COLORS.map((c) => (
                         <button
                           key={c.id}
                           onClick={() => setHeroColor(c)}
                           title={c.name}
-                          className={`w-4 h-4 border transition-all ${
+                          className={`w-5 h-5 rounded-xs border transition-all cursor-pointer ${
                             heroColor.id === c.id
-                              ? "border-amber-400 scale-125 ring-1 ring-amber-400"
-                              : "border-border-subtle hover:border-border"
+                              ? "border-amber-400 scale-110 ring-2 ring-amber-400/80 shadow-xs"
+                              : "border-border-subtle hover:border-border hover:scale-105"
                           }`}
                           style={{ backgroundColor: c.hex }}
                         />
@@ -257,7 +258,7 @@ export default function HomePage() {
 
                   <Link
                     href={`/studio?sku=${heroType === "tee" ? "TC-TEE-001" : heroType === "hoodie" ? "TC-HOD-001" : "TC-JER-001"}&color=${heroColor.id}`}
-                    className="font-mono text-[9px] uppercase tracking-widest text-amber-400 hover:text-amber-300 transition-colors underline underline-offset-2"
+                    className="font-mono text-[10px] uppercase tracking-widest text-amber-400 hover:text-amber-300 transition-colors underline underline-offset-4 flex items-center gap-1 font-semibold self-end sm:self-auto"
                   >
                     Customize in Studio →
                   </Link>
