@@ -3,7 +3,6 @@
 import { useState, useCallback, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import dynamic from "next/dynamic";
 import ProductCard from "@/components/product/ProductCard";
 import GarmentPreview from "@/components/product/GarmentPreview";
 import type { CatalogResponse } from "@/lib/types";
@@ -15,16 +14,6 @@ import EditorialBentoGallery from "@/components/home/EditorialBentoGallery";
 import Button from "@/components/ui/Button";
 import AgentAutopilotModal from "@/components/studio/AgentAutopilotModal";
 
-const Garment3DCanvas = dynamic(() => import("@/components/product/Garment3DCanvas"), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-72 bg-surface-1 border border-border-subtle flex flex-col items-center justify-center font-mono text-[9px] uppercase text-text-muted gap-2">
-      <div className="w-4 h-4 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
-      <span>Loading 3D Turntable...</span>
-    </div>
-  ),
-});
-
 export default function HomePage() {
   const router = useRouter();
   const [catalog, setCatalog] = useState<CatalogResponse | null>(null);
@@ -35,7 +24,7 @@ export default function HomePage() {
   // Hero interactive state
   const [heroColor, setHeroColor] = useState(APPAREL_COLORS[0]);
   const [heroType, setHeroType] = useState<"tee" | "hoodie" | "jersey">("tee");
-  const [heroCanvasMode, setHeroCanvasMode] = useState<"2d" | "3d">("3d");
+  const [heroView, setHeroView] = useState<"front" | "back">("front");
 
   // Collection filtering & sorting
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -176,79 +165,71 @@ export default function HomePage() {
                 {/* Mode & Silhouette selector row */}
                 <div className="flex items-center justify-between gap-2 mb-4">
                   {/* Silhouette selector pill */}
-                  <div className="flex gap-1 border border-border-subtle bg-surface-3/60 p-1">
+                  <div className="flex gap-1 border border-border-subtle bg-surface-3/60 p-1 rounded-xs">
                     <button
                       onClick={() => setHeroType("tee")}
-                      className={`px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-wider transition-colors ${
-                        heroType === "tee" ? "bg-foreground text-background font-bold" : "text-text-muted hover:text-foreground"
+                      className={`px-2.5 py-1 font-mono text-[9px] uppercase tracking-wider transition-colors rounded-xs ${
+                        heroType === "tee" ? "bg-amber-500 text-black font-bold shadow-xs" : "text-text-muted hover:text-foreground"
                       }`}
                     >
                       Tee
                     </button>
                     <button
                       onClick={() => setHeroType("hoodie")}
-                      className={`px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-wider transition-colors ${
-                        heroType === "hoodie" ? "bg-foreground text-background font-bold" : "text-text-muted hover:text-foreground"
+                      className={`px-2.5 py-1 font-mono text-[9px] uppercase tracking-wider transition-colors rounded-xs ${
+                        heroType === "hoodie" ? "bg-amber-500 text-black font-bold shadow-xs" : "text-text-muted hover:text-foreground"
                       }`}
                     >
                       Hoodie
                     </button>
                     <button
                       onClick={() => setHeroType("jersey")}
-                      className={`px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-wider transition-colors ${
-                        heroType === "jersey" ? "bg-foreground text-background font-bold" : "text-text-muted hover:text-foreground"
+                      className={`px-2.5 py-1 font-mono text-[9px] uppercase tracking-wider transition-colors rounded-xs ${
+                        heroType === "jersey" ? "bg-amber-500 text-black font-bold shadow-xs" : "text-text-muted hover:text-foreground"
                       }`}
                     >
                       Jersey
                     </button>
                   </div>
 
-                  {/* 2D vs 3D Mode Toggle */}
-                  <div className="flex gap-1 border border-border-subtle bg-surface-3/60 p-1">
+                  {/* 2D Front vs Back View Toggle */}
+                  <div className="flex gap-1 border border-border-subtle bg-surface-3/60 p-1 rounded-xs">
                     <button
-                      onClick={() => setHeroCanvasMode("3d")}
-                      className={`px-2 py-0.5 font-mono text-[8px] uppercase tracking-wider transition-colors ${
-                        heroCanvasMode === "3d"
-                          ? "bg-emerald-400 text-black font-bold"
-                          : "text-text-muted hover:text-foreground"
-                      }`}
-                    >
-                      3D R3F
-                    </button>
-                    <button
-                      onClick={() => setHeroCanvasMode("2d")}
-                      className={`px-2 py-0.5 font-mono text-[8px] uppercase tracking-wider transition-colors ${
-                        heroCanvasMode === "2d"
+                      onClick={() => setHeroView("front")}
+                      className={`px-2.5 py-1 font-mono text-[8px] uppercase tracking-wider transition-colors rounded-xs ${
+                        heroView === "front"
                           ? "bg-foreground text-background font-bold"
                           : "text-text-muted hover:text-foreground"
                       }`}
                     >
-                      2D Flat
+                      Front
+                    </button>
+                    <button
+                      onClick={() => setHeroView("back")}
+                      className={`px-2.5 py-1 font-mono text-[8px] uppercase tracking-wider transition-colors rounded-xs ${
+                        heroView === "back"
+                          ? "bg-foreground text-background font-bold"
+                          : "text-text-muted hover:text-foreground"
+                      }`}
+                    >
+                      Back
                     </button>
                   </div>
                 </div>
 
-                {/* Main Visualizer Area */}
+                {/* Main 2D Garment Visualizer */}
                 <div className="w-full flex justify-center py-2 h-72 relative">
-                  {heroCanvasMode === "3d" ? (
-                    <Garment3DCanvas
-                      garmentType={heroType}
-                      colorHex={heroColor.hex}
+                  <div className="w-full h-full flex items-center justify-center">
+                    <GarmentPreview
+                      type={heroType}
+                      color={heroColor.hex}
+                      colorId={heroColor.id}
                       designUrl={PRESET_DESIGNS[1].dataUrl}
-                      className="w-full h-full"
+                      size="md"
+                      view={heroView}
+                      interactive={false}
                     />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <GarmentPreview
-                        type={heroType}
-                        color={heroColor.hex}
-                        colorId={heroColor.id}
-                        designUrl={PRESET_DESIGNS[1].dataUrl}
-                        size="md"
-                        interactive={false}
-                      />
-                    </div>
-                  )}
+                  </div>
                 </div>
 
                 {/* Color swatch picker directly in hero */}
@@ -265,7 +246,7 @@ export default function HomePage() {
                           title={c.name}
                           className={`w-4 h-4 border transition-all ${
                             heroColor.id === c.id
-                              ? "border-foreground scale-125 ring-1 ring-foreground"
+                              ? "border-amber-400 scale-125 ring-1 ring-amber-400"
                               : "border-border-subtle hover:border-border"
                           }`}
                           style={{ backgroundColor: c.hex }}
@@ -276,7 +257,7 @@ export default function HomePage() {
 
                   <Link
                     href={`/studio?sku=${heroType === "tee" ? "TC-TEE-001" : heroType === "hoodie" ? "TC-HOD-001" : "TC-JER-001"}&color=${heroColor.id}`}
-                    className="font-mono text-[9px] uppercase tracking-widest text-emerald-400 hover:text-emerald-300 transition-colors underline underline-offset-2"
+                    className="font-mono text-[9px] uppercase tracking-widest text-amber-400 hover:text-amber-300 transition-colors underline underline-offset-2"
                   >
                     Customize in Studio →
                   </Link>
