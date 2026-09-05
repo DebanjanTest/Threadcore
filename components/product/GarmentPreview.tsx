@@ -114,7 +114,7 @@ export default function GarmentPreview({
               onLoad={() => setImgLoaded(true)}
               onError={() => setImgError(true)}
               className={`
-                w-full h-full object-cover select-none transition-opacity duration-300
+                w-full h-full ${photoUrl.startsWith("/pictures/") ? "object-contain p-3.5 drop-shadow-md" : "object-cover"} select-none transition-opacity duration-300
                 ${imgLoaded ? "opacity-100" : "opacity-0"}
               `}
             />

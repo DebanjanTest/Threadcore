@@ -111,7 +111,7 @@ export default function ProductCard({ sku, index }: ProductCardProps) {
                 src={frontImg}
                 alt={`${sku.name} - Front Angle (${selectedColor.name})`}
                 loading="lazy"
-                className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-out group-hover:scale-105 ${
+                className={`absolute inset-0 w-full h-full ${frontImg.startsWith("/pictures/") ? "object-contain p-3 drop-shadow-md" : "object-cover"} transition-all duration-500 ease-out group-hover:scale-105 ${
                   effectiveView === "front" ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
                 }`}
               />

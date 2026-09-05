@@ -98,29 +98,29 @@ export const APPAREL_SKUS: ApparelSKU[] = [
     modelFitInfo: "Model is 185cm / 75kg wearing size L (Boxy Streetwear Oversized Fit)",
     angles: DEFAULT_APPAREL_ANGLES,
     images: {
-      front: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=1000&q=85",
+      front: "/pictures/black-tshirt.png",
       back: "https://images.unsplash.com/photo-1618354691438-25bc04584c23?auto=format&fit=crop&w=1000&q=85",
       macro: "https://images.unsplash.com/photo-1594332495179-d979bcd18142?auto=format&fit=crop&w=1000&q=85",
       model: "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?auto=format&fit=crop&w=1000&q=85",
       byColor: {
         black: {
-          front: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=1000&q=85",
+          front: "/pictures/black-tshirt.png",
           back: "https://images.unsplash.com/photo-1618354691438-25bc04584c23?auto=format&fit=crop&w=1000&q=85",
         },
         white: {
-          front: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1000&q=85",
+          front: "/pictures/white-tshirt.png",
           back: "https://images.unsplash.com/photo-1620799139507-2a76f79a2f4d?auto=format&fit=crop&w=1000&q=85",
         },
         charcoal: {
-          front: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=1000&q=85",
+          front: "/pictures/charcoal-tshirt.png",
           back: "https://images.unsplash.com/photo-1618354691438-25bc04584c23?auto=format&fit=crop&w=1000&q=85",
         },
         heather: {
-          front: "https://images.unsplash.com/photo-1564584217132-2271feaeb3c5?auto=format&fit=crop&w=1000&q=85",
+          front: "/pictures/heather-tshirt.png",
           back: "https://images.unsplash.com/photo-1620799139507-2a76f79a2f4d?auto=format&fit=crop&w=1000&q=85",
         },
         "off-black": {
-          front: "https://images.unsplash.com/photo-1618354691714-7d92150909db?auto=format&fit=crop&w=1000&q=85",
+          front: "/pictures/off-black-tshirt.png",
           back: "https://images.unsplash.com/photo-1618354691438-25bc04584c23?auto=format&fit=crop&w=1000&q=85",
         },
       },

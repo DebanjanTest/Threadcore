@@ -112,7 +112,7 @@ export default function QuickViewModal({ sku, isOpen, onClose, initialColor }: Q
                 <img
                   src={currentPhoto}
                   alt={`${sku.name} - ${view}`}
-                  className="w-full h-full object-cover select-none"
+                  className={`w-full h-full ${currentPhoto?.startsWith("/pictures/") ? "object-contain p-3 drop-shadow-md" : "object-cover"} select-none`}
                   loading="lazy"
                 />
                 <div className="absolute bottom-2 left-2 bg-background/80 backdrop-blur-sm border border-border-subtle px-1.5 py-0.5">

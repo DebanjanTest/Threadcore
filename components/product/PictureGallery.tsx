@@ -100,7 +100,7 @@ export default function PictureGallery({
                   <img
                     src={frontImg}
                     alt="Front thumbnail"
-                    className="w-full h-full object-cover"
+                    className={`w-full h-full ${frontImg.startsWith("/pictures/") ? "object-contain p-1" : "object-cover"}`}
                     loading="lazy"
                   />
                 )}
@@ -219,7 +219,7 @@ export default function PictureGallery({
                   <img
                     src={currentAngle.id === "front" ? frontImg : backImg}
                     alt={`${sku.name} - ${currentAngle.label} (${color.name})`}
-                    className="w-full h-full object-cover select-none"
+                    className={`w-full h-full ${(currentAngle.id === "front" ? frontImg : backImg).startsWith("/pictures/") ? "object-contain p-4 drop-shadow-md" : "object-cover"} select-none`}
                   />
 
                   {/* Custom Graphic Print Overlay */}
